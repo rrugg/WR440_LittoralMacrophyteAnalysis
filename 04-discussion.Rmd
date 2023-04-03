@@ -1,0 +1,3 @@
+# Discussion 
+
+Reference items in your bibliography file(s) - those ending in `.bib` - using `@key`. E.g. [@ross2019aquasat]
