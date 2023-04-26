@@ -1,1 +1,74 @@
-# Methods
+---
+title: "NLA"
+author: "Rebecca Rugg"
+date: "2023-02-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+```
+
+METHODS
+	Finding a comprehensive dataset that had consistent measurements of benthic or littoral conditions as well as nutrient data and a wide-spread spatial reach proved to be much more difficult than was anticipated. After searching far and wide and using a considerable amount of time, the National Lakes Assessment dataset from the EPA was determined to be the best choice to move forward with. All other datasets that were looked at were either of too small spatial or temporal scale or they did not contain data for all the different metrics we were hoping to examine. 
+	The National Lakes Assessment (NLA) was a significant effort where thousands of lakes were sampled for thousands of parameters in 2007, 2012 and 2017 and the data is all publicly available for download on their website. While many of the same parameters were sampled in each year, the structure of data was not significantly different and different parameters were organized into different data files for each of the three years meaning that significant time effort was required to sift through the different data files in search of metrics that were consistent from year to year. Some metrics were only available for one of the three years or maybe the sample taken in one year was taken in a slightly different way than the same sample in other years. The sampling methodology presented with the datasets was lacking, so many sampling techniques and QAQC protocols are unknown. 
+	Zip files and CSV files were downloaded and imported into R Studio for data analysis. A significant amount of time was spent on data cleaning and formatting. Each year of the data used different Site Id names and so an additional file needed to be downloaded from the EPA website that contained site id conversions that needed to be downloaded and joined to each data frame from each year of downloaded data. Some of the data needed to be pivoted from long format to a wide or vice versa format in order for data analysis to be performed. Significant time was spent filtering out data into specific data frames that could be used for specific site and metric data. 
+	Any sites that could be considered eutrophic either by PTL, NTL or CHLA were filtered into a separate data frame for each year. Those data frames were then compared against one another to determine which sites that were eutrophic in 2007 had data available in 2012 and 2017. The data from these three years were then combined into one data frame along with fraction littoral macrophyte cover (amfcAll) and various filters were used on this master eutrophic dataset to perform some additional, more specific analysis. The sites in Figure 1 below are the sites included in any statistics calculated for eutrophic water bodies. 
+ 
+Figure 1. All eutrophic sites with data in 2007, 2012 and 2017. The same sites that a significant amount of the data analysis was applied to in this paper.
+	There were a few issues with the structure of the raw data from the NLA. The amfcAll parameter had only one data point for each lake in 2007 and 2012. In 2017, however, the amfcAll was sampled at eight different sites around the lake, named stations A-J and the data was reported on a scale from 0-4 based on density (0=0%, 1=<10%, 2=10-40%, 3=40-75%, 4=>75%). In order to make the amfcAll data as consistent as possible, I went into the first two years of data and added bins based on the bin categories that had been established by the files from 2017, placing the percentage values that were available for 2007 and 2012 into the same bins that were used in the sampling methodology for fractional macrophyte coverage in 2017. 
+	
+	LANDCOVER BACKGROUND FOR TS? 
+	
+	The dataset also possessed landuse metrics for the basin surrounding each lake. These metrics included basin area, percent cover for each type of land cover and area covered by each type of landcover. This data frame was cleaned so that a map could be created coloring each sample site by the dominant land cover in the basin as described by the “basin_landuse_metrics” file and displayed in Figure 2 below. 
+	
+```{r}
+
+basin_lu_metrics_07 <- read_csv("data/nla2007_alldata (1)/NLA2007_Basin_Landuse_Metrics_20061022.csv")
+
+site_id_conversion <- read_csv("~/WR440:Thesis/Data and Code/WaterQualityData/site_id_conversion.csv")
+
+site_merger <- function(df = phab_12, year = '2012'){
+  site_same <- site_id_conversion %>%
+    select(SITE_ID = year,
+           UNIQUE_ID)
+  
+  uniquely_identified <- inner_join(df,site_same, 
+                                    multiple = 'all')
+}
+  
+basin_lu_metrics_07 <- site_merger(df = basin_lu_metrics_07, year = "2007")
+
+pct_columns <- names(basin_lu_metrics_07)[grepl("PCT", names(basin_lu_metrics_07))]
+
+landuse_join <- basin_lu_metrics_07 %>%
+  select(UNIQUE_ID, pct_columns) %>%
+  pivot_longer(cols = c(-UNIQUE_ID), names_to = "Landcover", values_to = "Percent")
+
+
+
+landuse_long <- basin_lu_metrics_07 %>%
+  select(UNIQUE_ID, pct_columns) %>%
+  pivot_longer(cols = c(-UNIQUE_ID), names_to = "Landcover", values_to = "Percent") %>%
+  group_by(UNIQUE_ID) %>%
+  summarize_at("Percent", max)%>%
+  ungroup()%>%
+  left_join(landuse_join, by = c("UNIQUE_ID", "Percent"))
+
+landuse_geom <- left_join(landuse_long, lat_long, by = "UNIQUE_ID")
+
+landuse_sf <- st_as_sf(landuse_geom, coords = c("LON_DD", "LAT_DD"), crs = 4326)
+
+qtm(landuse_sf, symbols.col = "Landcover", symbols.size = .1)
+```
+	
+ 
+Figure 2. All sites in 2007 NLA dataset colored by their dominant landcover (by percent)
+	Linear regression was then applied to each of the variables in question: Total Nitrogen (NTL), Total Phosphorus (TPL), Chlorophyll A (CHLA) and Dominant Landcover, to determine which, if any of the variables had a strong correlation or explanatory ability for the resulting Fractional Littoral Macrophyte Coverage.  
+	I then performed linear regression tests on each variable in relationship with amfcAll for the same year using the function lm() in R. I then summarized the results with the summarize() function. These results then reported a p-value and an R-squared value that will be reported in the results section of this paper. Following linear regression for each variable to amfcAll within years, I sought to understand the temporal relationship between these variables and and looked at each variable in relation to the amfcAll coverage from the following years. 

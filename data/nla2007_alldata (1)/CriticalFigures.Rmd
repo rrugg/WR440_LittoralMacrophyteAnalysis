@@ -1,0 +1,142 @@
+
+Map of all EU Sites
+```{r}
+qtm(master_eu, symbols.size = 0.5, symbols.col = "darkgreen")
+```
+
+Map of All Landcover based on 2007 Data
+```{r}
+qtm(landuse_sf, symbols.col = "Landcover", symbols.size = .1)
+```
+
+amfcAll Boxplots for Each Year
+```{r}
+ggplot(eu_master_07, aes(y = amfcAll_07)) +
+  geom_boxplot(color = "black", fill = "darkgreen", alpha = .4)+
+  labs(x = "2007")+
+  scale_x_discrete(labels = NULL, breaks = NULL)+
+  theme_minimal()
+
+ggplot(eu_master_12, aes(y = amfcAll_12)) +
+  geom_boxplot(color = "black", fill = "darkgreen", alpha = .4)+
+  labs(x = "2012")+
+  scale_x_discrete(labels = NULL, breaks = NULL)+
+  theme_minimal()
+
+
+ggplot(eu_master_17, aes(y = amfcAll_17)) +
+  geom_boxplot(color = "black", fill = "darkgreen", alpha = .4)+
+  labs(x = "2017")+
+  scale_x_discrete(labels = NULL, breaks = NULL)+
+  theme_minimal()
+```
+
+PTL ~ AMFCALL P Driven
+```{r}
+ggplot(master_eu, aes(x = PTL_07, y = amfcAll_07)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = PTL_07, y = amfcAll_12)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = PTL_07, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+```
+
+PTL ~ AMFCALL AM Driven
+```{r}
+ggplot(master_eu, aes(x = PTL_17, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = PTL_12, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = PTL_07, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+```
+
+NTL ~ AMFCALL NTL Driven
+```{r}
+ggplot(master_eu, aes(x = NTL_07, y = amfcAll_07)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = NTL_07, y = amfcAll_12)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = NTL_07, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+```
+
+NTL ~ AMFCALL AM Driven
+```{r}
+ggplot(master_eu, aes(x = NTL_17, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = NTL_12, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = NTL_07, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+```
+
+CHLA ~ AMFCALL CHLA Driven
+```{r}
+
+ggplot(master_eu, aes(x = CHLA_07, y = amfcAll_07)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = CHLA_07, y = amfcAll_12)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = CHLA_07, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+```
+
+CHLA ~ AFMCALL AM DRIVEN
+```{r}
+ggplot(master_eu, aes(x = CHLA_17, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = CHLA_12, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+
+ggplot(master_eu, aes(x = CHLA_07, y = amfcAll_17)) +
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", se = FALSE, color = "darkgreen")+
+  theme_minimal()
+```
+

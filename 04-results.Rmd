@@ -1,1 +1,45 @@
-# Results
+---
+title: "Results"
+author: "Rebecca Rugg"
+date: "2023-04-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+```
+
+RESULTS
+	All modeling was done on eutrophic lakes where data was available in all three years of data unless otherwise stated. 
+	Figure () describes the change in Fractional Macrophyte Coverage over the 10 year sampling period and as one can see, there is little change in the means. The boxplots are all but identical in 2007 and 2012 and the mean and first quartile values decrease slightly in 2017 but the difference is not statistically significant when tested with a One-Way ANOVA test.  
+   
+Linear Modelling:
+```{r}
+
+lm_eu_07 <- lm(amfcAll_07 ~ PTL_07 + CHLA_07 + NTL_07, data = eu_master_07)
+summary(lm_eu_07)
+
+
+lm_all_07 <- lm(amfcAll_bin ~ PTL + CHLA + NTL, data = all_07)
+summary(lm_all_07)
+```
+
+	A BIT OF INFO ABOUT WHY LM and WHICH?
+
+
+PTL
+   
+NTL
+   
+CHLA
+   
+
+	As seen above, there is a slight increase in correlation for each of the three variables when increasing the time difference between the x and y variables. This finding indicates that there is a temporal relationship between Fractional Littoral Macrophyte Coverage and nutrient loading and Chlorophyll A as a proxy for pelagic productivity. It appears that amfcAll displays a delayed response to the nutrient loading in the lakes indicating that macrophyte cover could be a good long-term indicator of Trophic Status in lakes. 
+	LM TABLES AND EXPLANATION
+	STATISTICAL SIGNIFICANCE?
