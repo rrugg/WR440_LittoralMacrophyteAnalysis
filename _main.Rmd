@@ -1,0 +1,239 @@
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# Overview
+
+This is a _sample_ book written in **Markdown**. 
+
+## Render book
+
+You can build the book from the R console:
+
+```{r, eval=FALSE}
+bookdown::render_book()
+```
+
+<!--chapter:end:index.Rmd-->
+
+# Abstract
+
+<!--chapter:end:01-abstract.Rmd-->
+
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+INTRODUCTION
+
+The study of inland water quality has captivated scientists and the public alike as water scarcity, pollution and degradation have taken front page in newspapers around the world. Lake condition, referred to as Trophic Status (TS), is a common metric used by limnologists, researchers, and natural resource managers to communicate about the state of lakes and to decide upon best management practices. Lakes are classified into one of several categories: most generally, oligotrophic, mesotrophic and eutrophic in increasing order of productivity. While productivity may seem positive, an excess of nutrients and organism can lead to harmful conditions for wildlife and the surrounding ecosystem, most often seen in the form of algal blooms, anoxic conditions and fish kills, but also including cyanotoxins which can be harmful not only to internal organisms but to passersby interacting with the system. The most common parameters used to determine TS in lentic ecosystems are Total Phosphorus (TP), Total Nitrogen (TN), and Chlorophyll A (Chl A). Sources for increased TN and TP in lakes. Chl A is perhaps the most commonly used metric for determining Trophic Status. These three metrics do not always align, however, and many professionals have differing opinions surrounding which is the most accurate and consistent metric for determining Trophic Status. There is a need for better understanding of long-term ecological health as it aligns with lake Trophic Status and changes over time. 
+	There is also some controversy surrounding the global condition of lakes. Many believe that global greening is occurring meaning that more and more lakes are shifting from oligotrophic or mesotrophic to eutrophic. Many other scientists believe that lakes have maintained more or less the same state over the past several decades. It is important to understand trophic condition (TS) because it can help to inform management decisions and trigger mitigation efforts and can also help scientists to understand aquatic ecology but as outlined above, agreeing upon metrics and global trends is not always straightforward. 
+	Driven in part by an increased interest in greening of lakes, some limnologists have begun studying the properties and patterns of the littoral zone. The understanding of the Littoral Zone and its relationship to Trophic Status, while growing, is still not well studied, or understood and there is a seeming lack of literature discussing these topics. The Littoral Zone is defined by the EPA as the nearshore area of a lake that extends from shore to the deepest point where submerged aquatic vegetation can be sustained or where the substrate receives one percent of light (US EPA, 2013). Macrophytes are “aquatic plants growing in or near water. They may be either emergent (i.e., with upright portions above the water surface), submerged or floating” and the macrophytes often studied and studied within this thesis live in the littoral zone of the lake (US EPA, 2013). Littoral Macrophytes can be a good indicator of ecological health: too few can indicate, according to the EPA, high turbidity, herbicides, or salinization while too many can indicate nutrient loading and can affect ecosystem health (US EPA, 2013).
+	A study in eastern Europe while another study in the Northern United States examined correlations between lake macrophyte cover and the surrounding lake and landscape features. Their study concluded that they were able to predict between 29 and 55 percent of variation in the littoral macrophyte coverage using multiple regressions of many parameters describing the lake and surrounding system (Cheruvelil & Soranno, 2008). This study examined parameters including physio-chemistry, land use and land cover, hydrology and more and concluded that while a suite of different variables can be used together with one another to predict macrophyte cover, different growth forms and species should be examined separately and that anthropogenic changes have significant impacts on macrophyte cover and can overwrite some of the natural or expected patterns (Cheruvelil & Soranno, 2008). This study did not examine changes over time or lakes in a wide range of ecosystems. Another, smaller-scale study in Western Europe examined six lakes that varied in Trophic Status and sampled many parameters investigating biological indicators to track responses in pelagic and littoral zones (Eigemann et al., 2016). This study concluded that while pelagic productivity changes, mainly phytoplankton density may be the best indicator of trophic changes on a short temporal scale, “macrophytes may better reflect the long-term consequences of eutrophication in littoral areas, which can affect the ecological status of lakes for decades” (Eigemann et al., 2016). This study also cited another paper that, upon investigating correlations between littoral macrophytes and other parameters hypothesized that a lack of correlation may not actually indicate a lack of relationship but may be indicating a longer-term ecosystem process at play, namely the uptake of Phosphorus and other nutrients into the littoral vegetation thus increasing macrophyte density over time and reducing P concentrations in the water (Schneider et al., 2020). 
+	While these studies have a grasp on some of the spatial variation driving these patterns, they have not examined the temporal variation that is so critical to understanding ecosystem processes. This thesis serves to investigate the role that littoral macrophytes can play in helping scientists and natural resource managers understand lake health and long-term trends in limnology that may not be immediately obvious from looking at traditional trophic metrics alone. Through the study of both temporal and spatial variation across lentic ecosystems in the United States both correlation and trends over time will be pursued. 
+
+<!--chapter:end:02-intro.Rmd-->
+
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+```
+
+METHODS
+	Finding a comprehensive dataset that had consistent measurements of benthic or littoral conditions as well as nutrient data and a wide-spread spatial reach proved to be much more difficult than was anticipated. After searching far and wide and using a considerable amount of time, the National Lakes Assessment dataset from the EPA was determined to be the best choice to move forward with. All other datasets that were looked at were either of too small spatial or temporal scale or they did not contain data for all the different metrics we were hoping to examine. 
+	The National Lakes Assessment (NLA) was a significant effort where thousands of lakes were sampled for thousands of parameters in 2007, 2012 and 2017 and the data is all publicly available for download on their website. While many of the same parameters were sampled in each year, the structure of data was not significantly different and different parameters were organized into different data files for each of the three years meaning that significant time effort was required to sift through the different data files in search of metrics that were consistent from year to year. Some metrics were only available for one of the three years or maybe the sample taken in one year was taken in a slightly different way than the same sample in other years. The sampling methodology presented with the datasets was lacking, so many sampling techniques and QAQC protocols are unknown. 
+	Zip files and CSV files were downloaded and imported into R Studio for data analysis. A significant amount of time was spent on data cleaning and formatting. Each year of the data used different Site Id names and so an additional file needed to be downloaded from the EPA website that contained site id conversions that needed to be downloaded and joined to each data frame from each year of downloaded data. Some of the data needed to be pivoted from long format to a wide or vice versa format in order for data analysis to be performed. Significant time was spent filtering out data into specific data frames that could be used for specific site and metric data. 
+	Any sites that could be considered eutrophic either by PTL, NTL or CHLA were filtered into a separate data frame for each year. Those data frames were then compared against one another to determine which sites that were eutrophic in 2007 had data available in 2012 and 2017. The data from these three years were then combined into one data frame along with fraction littoral macrophyte cover (amfcAll) and various filters were used on this master eutrophic dataset to perform some additional, more specific analysis. The sites in Figure 1 below are the sites included in any statistics calculated for eutrophic water bodies. 
+ 
+Figure 1. All eutrophic sites with data in 2007, 2012 and 2017. The same sites that a significant amount of the data analysis was applied to in this paper.
+	There were a few issues with the structure of the raw data from the NLA. The amfcAll parameter had only one data point for each lake in 2007 and 2012. In 2017, however, the amfcAll was sampled at eight different sites around the lake, named stations A-J and the data was reported on a scale from 0-4 based on density (0=0%, 1=<10%, 2=10-40%, 3=40-75%, 4=>75%). In order to make the amfcAll data as consistent as possible, I went into the first two years of data and added bins based on the bin categories that had been established by the files from 2017, placing the percentage values that were available for 2007 and 2012 into the same bins that were used in the sampling methodology for fractional macrophyte coverage in 2017. 
+	
+	LANDCOVER BACKGROUND FOR TS? 
+	
+	The dataset also possessed landuse metrics for the basin surrounding each lake. These metrics included basin area, percent cover for each type of land cover and area covered by each type of landcover. This data frame was cleaned so that a map could be created coloring each sample site by the dominant land cover in the basin as described by the “basin_landuse_metrics” file and displayed in Figure 2 below. 
+	
+```{r}
+
+basin_lu_metrics_07 <- read_csv("data/nla2007_alldata (1)/NLA2007_Basin_Landuse_Metrics_20061022.csv")
+
+site_id_conversion <- read_csv("~/WR440:Thesis/Data and Code/WaterQualityData/site_id_conversion.csv")
+
+site_merger <- function(df = phab_12, year = '2012'){
+  site_same <- site_id_conversion %>%
+    select(SITE_ID = year,
+           UNIQUE_ID)
+  
+  uniquely_identified <- inner_join(df,site_same, 
+                                    multiple = 'all')
+}
+  
+basin_lu_metrics_07 <- site_merger(df = basin_lu_metrics_07, year = "2007")
+
+pct_columns <- names(basin_lu_metrics_07)[grepl("PCT", names(basin_lu_metrics_07))]
+
+landuse_join <- basin_lu_metrics_07 %>%
+  select(UNIQUE_ID, pct_columns) %>%
+  pivot_longer(cols = c(-UNIQUE_ID), names_to = "Landcover", values_to = "Percent")
+
+
+
+landuse_long <- basin_lu_metrics_07 %>%
+  select(UNIQUE_ID, pct_columns) %>%
+  pivot_longer(cols = c(-UNIQUE_ID), names_to = "Landcover", values_to = "Percent") %>%
+  group_by(UNIQUE_ID) %>%
+  summarize_at("Percent", max)%>%
+  ungroup()%>%
+  left_join(landuse_join, by = c("UNIQUE_ID", "Percent"))
+
+landuse_geom <- left_join(landuse_long, lat_long, by = "UNIQUE_ID")
+
+landuse_sf <- st_as_sf(landuse_geom, coords = c("LON_DD", "LAT_DD"), crs = 4326)
+
+qtm(landuse_sf, symbols.col = "Landcover", symbols.size = .1)
+```
+	
+ 
+Figure 2. All sites in 2007 NLA dataset colored by their dominant landcover (by percent)
+	Linear regression was then applied to each of the variables in question: Total Nitrogen (NTL), Total Phosphorus (TPL), Chlorophyll A (CHLA) and Dominant Landcover, to determine which, if any of the variables had a strong correlation or explanatory ability for the resulting Fractional Littoral Macrophyte Coverage.  
+	I then performed linear regression tests on each variable in relationship with amfcAll for the same year using the function lm() in R. I then summarized the results with the summarize() function. These results then reported a p-value and an R-squared value that will be reported in the results section of this paper. Following linear regression for each variable to amfcAll within years, I sought to understand the temporal relationship between these variables and and looked at each variable in relation to the amfcAll coverage from the following years. 
+
+<!--chapter:end:03-methods.Rmd-->
+
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(bookdown)
+```
+
+RESULTS
+	All modeling was done on eutrophic lakes where data was available in all three years of data unless otherwise stated. 
+	Figure () describes the change in Fractional Macrophyte Coverage over the 10 year sampling period and as one can see, there is little change in the means. The boxplots are all but identical in 2007 and 2012 and the mean and first quartile values decrease slightly in 2017 but the difference is not statistically significant when tested with a One-Way ANOVA test.  
+   
+Linear Modelling:
+```{r}
+
+lm_eu_07 <- lm(amfcAll_07 ~ PTL_07 + CHLA_07 + NTL_07, data = eu_master_07)
+summary(lm_eu_07)
+
+
+lm_all_07 <- lm(amfcAll_bin ~ PTL + CHLA + NTL, data = all_07)
+summary(lm_all_07)
+```
+
+	A BIT OF INFO ABOUT WHY LM and WHICH?
+
+
+PTL
+   
+NTL
+   
+CHLA
+   
+
+	As seen above, there is a slight increase in correlation for each of the three variables when increasing the time difference between the x and y variables. This finding indicates that there is a temporal relationship between Fractional Littoral Macrophyte Coverage and nutrient loading and Chlorophyll A as a proxy for pelagic productivity. It appears that amfcAll displays a delayed response to the nutrient loading in the lakes indicating that macrophyte cover could be a good long-term indicator of Trophic Status in lakes. 
+	LM TABLES AND EXPLANATION
+	STATISTICAL SIGNIFICANCE?
+
+<!--chapter:end:04-results.Rmd-->
+
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+	Eutrophication in lakes at temperate latitudes is a growing challenge for scientists and natural resource managers to mitigate and understand. This project investigates the relationship between a few variables, typically key predictor variables for Trophic Status and Fractional Littoral Macrophyte Coverage, attempting to draw correlations and 
+	A few potential sources of error in these analyses include complex and inconsistent raw datasets, sampling, and reporting techniques. The sample size included in the data analysis in this project only included the 142 sites that were classified as eutrophic in 2007 and where data was also available for the same sites in 2012 and 2017. In addition to these sources of error, there is some controversy surrounding how Trophic Status should be determined and I used general metrics outlined by the EPA in their NLA dataset to classify lakes as Eutrophic based on NTL, PTL or CHLA (PTL >= 25 | NTL >= 750 | CHLA >= 7) UNITS. The temporal limitations of this study were an additional challenge to the reliability of the results; only three years of data were available from the EPA through the NLA. If additional years of data are added to this program at some point, comparison of the trends in relationship to the new data would be required ot support the findings of this study. Finally, there are countless other variables that affect the growth patterns of littoral macrophytes and there could be some unexamined or unsampled parameters that had an outside effect on these variables and that indicated correlation when, in reality, there were other confounding variables. None of these variables should be used on their own to predict the trends of other variables. The ecology of aquatic systems is incredibly complex and a large spatial, temporal, and ecological study should be done in order to make any management decisions about lakes or their surrounding ecosystems. It is also important to study the species that present in these aquatic systems and to investigate if there is a correlation or relationship specific to the species of macrophyte present in the system. 
+	The analysis indicates that there may be a delayed response in the fractional macrophyte coverage compared to nutrient loading in the system.  OTHER RESULTS AND CLAIMS HERE
+	This analysis just barely scratches the surface of the complex relationships between different aquatic ecological principles and concepts. There is a great need for more assessments like the National Lakes Assessment and continuation of these studies over time to help provide researchers and natural resource managers with the information they need to classify lakes and manage their treatment. Further study could also be useful in the context of littoral macrophytes as a mechanism for uptake of excess nutrients in aquatic systems. While it is hard to prove causation in any large-scale study like this one, if the N and P inputs into the system were known, along with the existing concentrations of N and P, then change in nutrient levels could be measured against changes in littoral macrophyte cover to explore ecological solutions to significant challenges like eutrophication. 
+	Variables such as taxonomy, land use and land cover change in the basin, water temperature, sediment inputs and so much more could be useful to pair with a study like this one to better understand the relationships between these complex variables and their effect on the natural environment. 
+	In conclusion, this research helps to support the claims of Eigemann et al., 2016 that littoral macrophyte coverage could be a good indicator of long-term ecological health as well as sheds light on the interconnectivity of different ecological variables over time. Despite a lack of correlation for a given year between nutrient concentrations and amfcAll, when spread over a ten year period, the possible correlation became evident. This warrants further investigation with a larger dataset, a greater number of variables and most importantly a larger temporal scale. 
+	The gained understanding of trophic status can help scientists and natural resource managers better trigger mitigation efforts as well as improve communication surrounding the status of lentic water bodies. Finally, this study could help shed some light on the source scientific disagreement surrounding trophic trends of lakes worldwide.  
+
+<!--chapter:end:05-discussion.Rmd-->
+
+# References {-}
+
+
+<!--chapter:end:06-references.Rmd-->
+

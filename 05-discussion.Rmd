@@ -1,4 +1,19 @@
-
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
 	Eutrophication in lakes at temperate latitudes is a growing challenge for scientists and natural resource managers to mitigate and understand. This project investigates the relationship between a few variables, typically key predictor variables for Trophic Status and Fractional Littoral Macrophyte Coverage, attempting to draw correlations and 
 	A few potential sources of error in these analyses include complex and inconsistent raw datasets, sampling, and reporting techniques. The sample size included in the data analysis in this project only included the 142 sites that were classified as eutrophic in 2007 and where data was also available for the same sites in 2012 and 2017. In addition to these sources of error, there is some controversy surrounding how Trophic Status should be determined and I used general metrics outlined by the EPA in their NLA dataset to classify lakes as Eutrophic based on NTL, PTL or CHLA (PTL >= 25 | NTL >= 750 | CHLA >= 7) UNITS. The temporal limitations of this study were an additional challenge to the reliability of the results; only three years of data were available from the EPA through the NLA. If additional years of data are added to this program at some point, comparison of the trends in relationship to the new data would be required ot support the findings of this study. Finally, there are countless other variables that affect the growth patterns of littoral macrophytes and there could be some unexamined or unsampled parameters that had an outside effect on these variables and that indicated correlation when, in reality, there were other confounding variables. None of these variables should be used on their own to predict the trends of other variables. The ecology of aquatic systems is incredibly complex and a large spatial, temporal, and ecological study should be done in order to make any management decisions about lakes or their surrounding ecosystems. It is also important to study the species that present in these aquatic systems and to investigate if there is a correlation or relationship specific to the species of macrophyte present in the system. 
 	The analysis indicates that there may be a delayed response in the fractional macrophyte coverage compared to nutrient loading in the system.  OTHER RESULTS AND CLAIMS HERE

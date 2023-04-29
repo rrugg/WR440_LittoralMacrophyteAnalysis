@@ -1,3 +1,20 @@
+--- 
+title: "Bookdown Template"
+author:
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/USERNAME/REPO
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
 INTRODUCTION
 
 The study of inland water quality has captivated scientists and the public alike as water scarcity, pollution and degradation have taken front page in newspapers around the world. Lake condition, referred to as Trophic Status (TS), is a common metric used by limnologists, researchers, and natural resource managers to communicate about the state of lakes and to decide upon best management practices. Lakes are classified into one of several categories: most generally, oligotrophic, mesotrophic and eutrophic in increasing order of productivity. While productivity may seem positive, an excess of nutrients and organism can lead to harmful conditions for wildlife and the surrounding ecosystem, most often seen in the form of algal blooms, anoxic conditions and fish kills, but also including cyanotoxins which can be harmful not only to internal organisms but to passersby interacting with the system. The most common parameters used to determine TS in lentic ecosystems are Total Phosphorus (TP), Total Nitrogen (TN), and Chlorophyll A (Chl A). Sources for increased TN and TP in lakes. Chl A is perhaps the most commonly used metric for determining Trophic Status. These three metrics do not always align, however, and many professionals have differing opinions surrounding which is the most accurate and consistent metric for determining Trophic Status. There is a need for better understanding of long-term ecological health as it aligns with lake Trophic Status and changes over time. 
