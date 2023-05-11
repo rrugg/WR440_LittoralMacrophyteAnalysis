@@ -1,5 +1,4 @@
 overview
-render-book
 abstract
 introduction
 methods
@@ -9,4 +8,5 @@ chlorophyll-a
 total-nitrogen
 total-phosphorus
 trends-by-trophic-status
+distribution-of-means-for-different-landcover-types
 discussion

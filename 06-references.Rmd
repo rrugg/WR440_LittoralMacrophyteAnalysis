@@ -1,2 +1,11 @@
 # References {-}
 
+Cheruvelil, K. S., & Soranno, P. A. (2008). Relationships between lake macrophyte cover and lake and landscape features. Aquatic Botany, 88(3), 219–227. https://doi.org/10.1016/j.aquabot.2007.10.005
+Eigemann, F., Mischke, U., Hupfer, M., Schaumburg, J., & Hilt, S. (2016). Biological indicators track differential responses of pelagic and littoral areas to nutrient load reductions in German lakes. Ecological Indicators, 61, 905–910. https://doi.org/10.1016/j.ecolind.2015.10.045
+Grzybowski, M., Furgała-Selezniow, G., Koszałka, J., Kalinowska, J., & Jankun-Woźnicka, M. (2023). Correlation between catchment land use/cover and macrophyte assessment of lake ecological status. Ecological Indicators, 146, 109857. https://doi.org/10.1016/j.ecolind.2022.109857
+Hargeby, A., Andersson, G., Blindow, I., & Johansson, S. (1994). Trophic web structure in a shallow eutrophic lake during a dominance shift from phytoplankton to submerged macrophytes. Hydrobiologia, 279(1), 83–90. https://doi.org/10.1007/BF00027843
+Muylaert, K., Pérez-Martínez, C., Sánchez-Castillo, P., Lauridsen, T. L., Vanderstukken, M., Declerck, S. A. J., Van der Gucht, K., Conde-Porcuna, J.-M., Jeppesen, E., De Meester, L., & Vyverman, W. (2010). Influence of nutrients, submerged macrophytes and zooplankton grazing on phytoplankton biomass and diversity along a latitudinal gradient in Europe. Hydrobiologia, 653(1), 79–90. https://doi.org/10.1007/s10750-010-0345-1
+Portielje, R., & Van der Molen, D. T. (1999). Relationships between eutrophication variables: From nutrient loading to transparency. In N. Walz & B. Nixdorf (Eds.), Shallow Lakes ’98: Trophic Interactions in Shallow Freshwater and Brackish Waterbodies (pp. 375–387). Springer Netherlands. https://doi.org/10.1007/978-94-017-2986-4_42
+Scheffer, M., Carpenter, S., Foley, J. A., Folke, C., & Walker, B. (2001). Catastrophic shifts in ecosystems. Nature, 413(6856), 591–596. https://doi.org/10.1038/35098000
+Scheffer, M., & van Nes, E. H. (2007). Shallow lakes theory revisited: Various alternative regimes driven by climate, nutrients, depth and lake size. Hydrobiologia, 584(1), 455–466. https://doi.org/10.1007/s10750-007-0616-7
+US EPA, O. (2013, November 21). Indicators: Macrophytes [Overviews and Factsheets]. https://www.epa.gov/national-aquatic-resource-surveys/indicators-macrophytes
