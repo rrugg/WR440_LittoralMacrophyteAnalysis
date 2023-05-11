@@ -1,5 +1,5 @@
 --- 
-title: "Bookdown Template"
+title: "Drivers of Littoral Macrophyte Coverage"
 author: "Rebecca Rugg"
 date: "`r Sys.Date()`"
 output:
@@ -25,26 +25,28 @@ library(plotly)
 library(dplyr)
 library(tidyr)
 library(tidyverse)
+library(sf)
+library(tmap)
+library(gridExtra)
 ```
 
-METHODS
-	Finding a comprehensive dataset that had consistent measurements of benthic or littoral conditions as well as nutrient data and a wide-spread spatial reach proved to be much more difficult than was anticipated. After searching far and wide and using a considerable amount of time, the National Lakes Assessment dataset from the EPA was determined to be the best choice to move forward with. All other datasets that were looked at were either of too small spatial or temporal scale or they did not contain data for all the different metrics we were hoping to examine. 
-	The National Lakes Assessment (NLA) was a significant effort where thousands of lakes were sampled for thousands of parameters in 2007, 2012 and 2017 and the data is all publicly available for download on their website. While many of the same parameters were sampled in each year, the structure of data was not significantly different and different parameters were organized into different data files for each of the three years meaning that significant time effort was required to sift through the different data files in search of metrics that were consistent from year to year. Some metrics were only available for one of the three years or maybe the sample taken in one year was taken in a slightly different way than the same sample in other years. The sampling methodology presented with the datasets was lacking, so many sampling techniques and QAQC protocols are unknown. 
-	Zip files and CSV files were downloaded and imported into R Studio for data analysis. A significant amount of time was spent on data cleaning and formatting. Each year of the data used different Site Id names and so an additional file needed to be downloaded from the EPA website that contained site id conversions that needed to be downloaded and joined to each data frame from each year of downloaded data. Some of the data needed to be pivoted from long format to a wide or vice versa format in order for data analysis to be performed. Significant time was spent filtering out data into specific data frames that could be used for specific site and metric data. 
-	Any sites that could be considered eutrophic either by PTL, NTL or CHLA were filtered into a separate data frame for each year. Those data frames were then compared against one another to determine which sites that were eutrophic in 2007 had data available in 2012 and 2017. The data from these three years were then combined into one data frame along with fraction littoral macrophyte cover (amfcAll) and various filters were used on this master eutrophic dataset to perform some additional, more specific analysis. The sites in Figure 1 below are the sites included in any statistics calculated for eutrophic water bodies. 
- 
-Figure 1. All eutrophic sites with data in 2007, 2012 and 2017. The same sites that a significant amount of the data analysis was applied to in this paper.
-	There were a few issues with the structure of the raw data from the NLA. The amfcAll parameter had only one data point for each lake in 2007 and 2012. In 2017, however, the amfcAll was sampled at eight different sites around the lake, named stations A-J and the data was reported on a scale from 0-4 based on density (0=0%, 1=<10%, 2=10-40%, 3=40-75%, 4=>75%). In order to make the amfcAll data as consistent as possible, I went into the first two years of data and added bins based on the bin categories that had been established by the files from 2017, placing the percentage values that were available for 2007 and 2012 into the same bins that were used in the sampling methodology for fractional macrophyte coverage in 2017. 
-	
-	LANDCOVER BACKGROUND FOR TS? 
-	
-	The dataset also possessed landuse metrics for the basin surrounding each lake. These metrics included basin area, percent cover for each type of land cover and area covered by each type of landcover. This data frame was cleaned so that a map could be created coloring each sample site by the dominant land cover in the basin as described by the “basin_landuse_metrics” file and displayed in Figure 2 below. 
-	
-```{r}
+# Methods
 
+	Finding a comprehensive dataset that had consistent measurements of benthic or littoral conditions as well as nutrient data and a wide-spread spatial reach proved to be much more difficult than anticipated. The National Lakes Assessment dataset was selected for the data analysis included in this project. This dataset includes hundreds of metrics sampled at thousands of lakes around the United States in 2007, 2012 and 2017 including physical, chemical, and hydrological parameters. The data is all publicly available for download on their website and sampling methodologies are outlined for the convenience of the researcher. 
+	Zip files and CSV files were downloaded from the data portal and imported into R Studio for data analysis. A significant amount of time was spent data cleaning and formatting in order to prepare for statistical testing and visualization. Both learning and troubleshooting code for the entirety of this project were core to the success of the research and the understanding of the results.
+
+	
+	Importing and Organizing All Data Frames
+```{r, 3-1}
 basin_lu_metrics_07 <- read_csv("data/nla2007_alldata (1)/NLA2007_Basin_Landuse_Metrics_20061022.csv")
 
-site_id_conversion <- read_csv("~/WR440:Thesis/Data and Code/WaterQualityData/site_id_conversion.csv")
+site_id_conversion <- read_csv("data/site_id_conversion.csv")
+
+chem_conditions_07 <- read_csv("data/nla2007_alldata (1)/NLA2007_Chemical_ConditionEstimates_20091123.csv")
+
+phab_metrics_07_a <- read_csv("data/nla2007_alldata (1)/NLA2007_PHab_Metrics_A.csv")
+
+water_quality_07 <- site_merger(df = water_quality_07, year = "2007")
 
 site_merger <- function(df = phab_12, year = '2012'){
   site_same <- site_id_conversion %>%
@@ -54,17 +56,48 @@ site_merger <- function(df = phab_12, year = '2012'){
   uniquely_identified <- inner_join(df,site_same, 
                                     multiple = 'all')
 }
-  
+chem_conditions_07 <- site_merger(df = chem_conditions_07, year = "2007")
 basin_lu_metrics_07 <- site_merger(df = basin_lu_metrics_07, year = "2007")
+phab_metrics_07_a <- site_merger(df = phab_metrics_07_a, year = "2007")
+water_quality_07 <- site_merger(df = water_quality_07, year = "2007")
+
+phab_litt_a <- phab_metrics_07_a %>%
+  select(UNIQUE_ID, VISIT_NO, DATEPHAB, amfcAll)
+
+chla_points <- chem_conditions_07 %>%
+  select(LON_DD, LAT_DD, CHLA, UNIQUE_ID, VISIT_NO)
+
+lat_long <- chla_points %>%
+  select(LON_DD, LAT_DD, UNIQUE_ID)
+```
+	
+ 
+	
+##	Landcover Background and Analysis
+	
+	The dataset also possessed landuse metrics for the basin surrounding each lake. These metrics included basin area, percent cover for each type of land cover and area covered by each type of landcover. This data frame was cleaned so that a map could be created coloring each sample site by the dominant land cover in the basin as described by the Basin Landuse Metrics file and displayed in Figure 2 below. Landcover plays a significant role in the characteristics within a lake including the nutrient concentrations, the Chlorophyll A concentrations and the Littoral Macrophyte Density. 
+	
+	Creating DataFrame with Landcover assigned to each point
+```{r 3-2}
+nutrient_conc_07 <- water_quality_07 %>%
+  filter(VISIT_NO == "1", SAMPLE_CATEGORY == "P") 
+
+nutrient_conc_07 <- nutrient_conc_07 %>%
+  select(UNIQUE_ID, DATE_COL, PTL, NTL, CHLA) %>%
+  inner_join(lat_long, by = "UNIQUE_ID") %>%
+  distinct()
+
+nutrient_sf <- st_as_sf(nutrient_conc_07, coords = c("LON_DD", "LAT_DD"), crs = 4326)
 
 pct_columns <- names(basin_lu_metrics_07)[grepl("PCT", names(basin_lu_metrics_07))]
 
 landuse_join <- basin_lu_metrics_07 %>%
   select(UNIQUE_ID, pct_columns) %>%
   pivot_longer(cols = c(-UNIQUE_ID), names_to = "Landcover", values_to = "Percent")
+```
 
-
-
+  Because of the strong correlations between landcover and ecological properties, the sites were first examined for the dominant landcover in each respective watershed. A function as created that selected the landcover representing the highest percentage of coverage in each basin and the data was then mapped and each lake was colored by the dominant landcover. This preliminary analysis allowed for the visualization (Figure 2) of biogeochemical and ecological trends around the country. 
+``` {r, 3-3.5}
 landuse_long <- basin_lu_metrics_07 %>%
   select(UNIQUE_ID, pct_columns) %>%
   pivot_longer(cols = c(-UNIQUE_ID), names_to = "Landcover", values_to = "Percent") %>%
@@ -77,10 +110,46 @@ landuse_geom <- left_join(landuse_long, lat_long, by = "UNIQUE_ID")
 
 landuse_sf <- st_as_sf(landuse_geom, coords = c("LON_DD", "LAT_DD"), crs = 4326)
 
-qtm(landuse_sf, symbols.col = "Landcover", symbols.size = .1)
+qtm(landuse_sf, symbols.col = "Landcover", symbols.size = .1, title = "Figure 2 - Sites Colored by Dominant Landcover")
 ```
 	
+To identify spatial trends based on different metrics, landcover types and trophic statuses datasets were filtered in order to be best fit for analysis. These data frames were also joined with spatial characteristics so that they could be mapped.
+
+```{r, 3-3}
+phab_litt_geom1 <- left_join(phab_litt_a, lat_long, by = "UNIQUE_ID", multiple = "all") %>%
+  distinct(.keep_all = TRUE) %>%
+  filter(VISIT_NO == "1")
+
+all_07 <- inner_join(nutrient_sf, phab_litt_geom1, by = "UNIQUE_ID") %>%
+  select(UNIQUE_ID, PTL, NTL, CHLA, geometry, amfcAll)
+
+clean_07 <- na.omit(all_07)
+
+lu_07 <- inner_join(landuse_long, clean_07, by = "UNIQUE_ID")
+
+## Adding Columns with log-based values
+lu_07 <- lu_07 %>%
+  mutate(log_CHLA = log10(CHLA),
+         log_PTL = log10(PTL), 
+         log_NTL = log10(NTL))
+
+dominant_07 <- lu_07 %>%
+  filter(Landcover == c("PCT_AGRIC_BSN", "PCT_FOREST_BSN", "PCT_DEVELOPED_BSN", "PCT_GRASS_BSN"))
+
+
+lu_07_sf <- inner_join(lu_07, lat_long, by = "UNIQUE_ID")
+lu_07_sf <- st_as_sf(lu_07_sf, coords = c("LON_DD", "LAT_DD"), crs = 4326)
+```
  
-Figure 2. All sites in 2007 NLA dataset colored by their dominant landcover (by percent)
-	Linear regression was then applied to each of the variables in question: Total Nitrogen (NTL), Total Phosphorus (TPL), Chlorophyll A (CHLA) and Dominant Landcover, to determine which, if any of the variables had a strong correlation or explanatory ability for the resulting Fractional Littoral Macrophyte Coverage.  
-	I then performed linear regression tests on each variable in relationship with amfcAll for the same year using the function lm() in R. I then summarized the results with the summarize() function. These results then reported a p-value and an R-squared value that will be reported in the results section of this paper. Following linear regression for each variable to amfcAll within years, I sought to understand the temporal relationship between these variables and and looked at each variable in relation to the amfcAll coverage from the following years. 
+ Creating Data Frames for Each Status of Lake
+```{r}
+oligo <- lu_07 %>%
+  filter(CHLA <= 2)
+meso <- lu_07 %>%
+  filter(CHLA > 2 & CHLA <= 7)
+eu <- lu_07 %>%
+  filter(CHLA < 7 & CHLA <= 30)
+heu <- lu_07 %>%
+  filter(CHLA > 30)
+```
+

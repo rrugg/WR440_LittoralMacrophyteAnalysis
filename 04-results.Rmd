@@ -1,6 +1,6 @@
 --- 
-title: "Bookdown Template"
-author:
+title: "Drivers of Littoral Macrophyte Coverage"
+author: "Rebecca Rugg"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -15,7 +15,7 @@ link-citations: yes
 github-repo: rstudio/bookdown-demo
 ---
 
-```{r setup, include=FALSE}
+```{r setup 4, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(ggplot2)
@@ -24,33 +24,212 @@ library(dplyr)
 library(tidyr)
 library(tidyverse)
 library(bookdown)
+library(ggthemes)
+
+tmap::tmap_mode("view")
 ```
 
-RESULTS
-	All modeling was done on eutrophic lakes where data was available in all three years of data unless otherwise stated. 
-	Figure () describes the change in Fractional Macrophyte Coverage over the 10 year sampling period and as one can see, there is little change in the means. The boxplots are all but identical in 2007 and 2012 and the mean and first quartile values decrease slightly in 2017 but the difference is not statistically significant when tested with a One-Way ANOVA test.  
-   
-Linear Modelling:
+# Results
+
+  
+  Creating Landcover Specific Data Frames
+  
+```{r, 4-5}
+forest <- dominant_07 %>%
+  filter(Landcover == "PCT_FOREST_BSN")
+
+dev <- dominant_07 %>%
+  filter(Landcover == "PCT_DEVELOPED_BSN")
+
+ag <- dominant_07 %>%
+  filter(Landcover == "PCT_AGRIC_BSN")
+
+grass <- dominant_07 %>%
+  filter(Landcover == "PCT_GRASS_BSN")
+```
+  
+Distribution of Fractional Littoral Macrophyte Coverage
+```{r, 4-4}
+qtm(lu_07_sf, symbols.col = "amfcAll", symbols.size = 0.1)
+
+ggplot(lu_07, aes(x = Landcover, y = amfcAll))+
+  geom_point()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(y = "Fractional Littoral Macrophyte Coverage", title = "Littoral Macrophyte Coverage by Dominant Landcover")
+```
+
+## Chlorophyll A
+
+```{r, 4-1}
+## Map of CHLA Concentrations
+qtm(lu_07_sf, symbols.col = "log_CHLA", symbols.size = 0.1)
+
+## Graphed Not Separated by Landcover
+ggplot(lu_07, aes(x = log_CHLA, y = amfcAll, col = Landcover))+
+  geom_point()+
+  theme_few()
+
+## Looking at All Landcovers
+ggplot(lu_07, aes(x = log_CHLA, y = amfcAll))+
+  geom_point()+
+  facet_wrap(~Landcover, ncol = 7)+
+  theme_few()
+
+## Looking at the Four Most Common Landcovers
+ggplot(dominant_07, aes(x = CHLA, y = amfcAll))+
+  geom_point()+
+  facet_wrap(~Landcover, ncol = 2)+
+  scale_x_log10()+
+  theme_few()
+
+summary(lm(log_CHLA~amfcAll, data = forest))
+summary(lm(log_CHLA~amfcAll, data = dev))
+summary(lm(log_CHLA ~ amfcAll, data = ag))
+```
+  With an adjusted R-Squared of -0.0009185 and a p-value of 0.96 there is no correlation between Chlorophyll A and Littoral Macrophyte Coverage (LMC) from samples taken in the same year and including all sites in 2007 as displayed in the first figure above. 
+  
+  For each of the four dominant landcovers chosen linear models were run that examined the relationship between each of the predictor variables and the correlation with LMC and the adjusted R-squared values are displayed in the table below for each land cover and predictor variable. Keep in mind that every R-squared value represents the correlation between the predictor variable (nutrients and Chlorophyll A) and Fractional Littoral Macrophyte Coverage for the given dominant landcover. 
+
+## Total Nitrogen
+
+```{r, 4-2}
+qtm(lu_07_sf, symbols.col = "log_NTL", symbols.size = 0.1)
+
+ggplot(dominant_07, aes(x = NTL, y = amfcAll))+
+  geom_point()+
+  facet_wrap(~Landcover, ncol = 2)+
+  scale_x_log10()+
+  theme_few()+
+  labs(x = "log(Total Nitrogen)", y = "Fractional Littoral Macrophyte Coverage", title = "Total Nitrogen versus Fractional Littoral Macrophyte Coverage for Four Most Common Basin Landcovers")
+
+summary(lm(log_NTL ~ amfcAll, data = forest))
+summary(lm(log_NTL ~ amfcAll, data = dev))
+summary(lm(log_NTL ~ amfcAll, data = ag))
+```
+
+
+## Total Phosphorus
+
+```{r, 4-3}
+qtm(lu_07_sf, symbols.col = "log_PTL", symbols.size = 0.1)
+
+
+ggplot(dominant_07, aes(x = PTL, y = amfcAll)) +
+  geom_point()+
+  facet_wrap(~Landcover, ncol = 2)+
+  scale_x_log10()+
+  theme_few()+
+  labs(x = "log(Total Phosphorus)", y = "Fractional Littoral Macrophyte Coverage", title = "Total Phosphorus versus Fractional Littoral Macrophyte Coverage for Four Most Common Basin Landcovers")
+
+summary(lm(log_PTL ~ amfcAll, data = forest))
+summary(lm(log_PTL ~ amfcAll, data = dev))
+summary(lm(log_PTL ~ amfcAll, data = ag))
+```
+
+## Trends by Trophic Status
+
+Plotting Different Trophic Status
+```{r, 4-6}
+ggplot(oligo, aes(x = log_CHLA, y = amfcAll))+
+  geom_point()+
+  theme_few()
+
+summary(lm(log_CHLA~amfcAll, data = oligo))
+summary(lm(log_NTL~amfcAll, data = oligo))
+summary(lm(log_PTL~amfcAll, data = oligo))
+
+ggplot(meso, aes(x = log_CHLA, y = amfcAll))+
+  geom_point()+
+  theme_few()
+
+summary(lm(log_CHLA~amfcAll, data = meso))
+summary(lm(log_NTL~amfcAll, data = meso))
+summary(lm(log_PTL~amfcAll, data = meso))
+
+ggplot(eu, aes(x = log_CHLA, y = amfcAll))+
+  geom_point()+
+  theme_few()
+
+summary(lm(log_CHLA~amfcAll, data = eu))
+summary(lm(log_NTL~amfcAll, data = eu))
+summary(lm(log_PTL~amfcAll, data = eu))
+
+ggplot(heu, aes(x = log_CHLA, y = amfcAll))+
+  geom_point()+
+  theme_few()
+
+summary(lm(log_CHLA~amfcAll, data = heu))
+summary(lm(log_NTL~amfcAll, data = heu))
+summary(lm(log_PTL~amfcAll, data = heu))
+```
+    While the correlations above are still weak correlations, they are slightly stronger correlations than those outlined in Figure 10 which described the correlations split up by dominant landcover. 
+    
+    
+# Distribution of Means for different Landcover Types
 ```{r}
+ggplot(lu_07, aes(x = Landcover, y = amfcAll))+
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Dominant Landcover in Basin", y = "Fractional Littoral Macrophyte Coverage", title = "Fractional Littoral Macrophyte Coverage by Dominant Landcover")
 
-lm_eu_07 <- lm(amfcAll_07 ~ PTL_07 + CHLA_07 + NTL_07, data = eu_master_07)
-summary(lm_eu_07)
+ggplot(dominant_07, aes(x = Landcover, y = amfcAll))+
+  geom_boxplot()+
+  theme_few()+
+  labs(x = "Dominant Landcover in Basin", y = "Fractional Littoral Macrophyte Coverage", title = "Fractional Littoral Macrophyte Coverage by Dominant Landcover")
+
+ggplot(oligo, aes(x = Landcover, y = amfcAll))+
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Dominant Landcover in Basin", y = "Fractional Littoral Macrophyte Coverage", title = "Fractional Littoral Macrophyte Coverage by Dominant Landcover - Oligotrophic")
 
 
-lm_all_07 <- lm(amfcAll_bin ~ PTL + CHLA + NTL, data = all_07)
-summary(lm_all_07)
+ggplot(meso, aes(x = Landcover, y = amfcAll))+
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Dominant Landcover in Basin", y = "Fractional Littoral Macrophyte Coverage", title = "Fractional Littoral Macrophyte Coverage by Dominant Landcover - Mesotrophic")
+
+
+ggplot(eu, aes(x = Landcover, y = amfcAll))+
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Dominant Landcover in Basin", y = "Fractional Littoral Macrophyte Coverage", title = "Fractional Littoral Macrophyte Coverage by Dominant Landcover - Eutrophic")
+
+
+ggplot(heu, aes(x = Landcover, y = amfcAll))+
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Dominant Landcover in Basin", y = "Fractional Littoral Macrophyte Coverage", title = "Fractional Littoral Macrophyte Coverage by Dominant Landcover - Hypereutrophic")
+```
+    There is a wide distribution of Fractional Littoral Macrophyte Coverage for each type of dominant landcover and the first figure above does not indicate that any of the mean values would be statistically significant in their difference from one another. The following four figures are the same as Figure 11 but are split out by the Trophic Status based on the criteria outlined in the methods section of this paper. 
+  
+    Each of these figures describes the wide variety of traits possessed by inland waters in the United States and the difficulties scientists face when attempting large-scale analyses. One observation is the very low means present for LMC in the hypereutrophic lakes, indicating low Littoral Macrophyte Coverage in lakes with very high Chl A concentrations. Each of the four groups of trophic status then underwent a linear model to investigate the relationship between trophic status and primary productivity. Keep in mind that every R-Squared value represents the correlation between the predictor variable (nutrients and Chlorophyll A) and Fractional Littoral Macrophyte Coverage for the given trophic condition.
+    
+```{r}
+o <- ggplot(oligo, aes(x = log_CHLA, y = amfcAll))+
+  geom_point(col = "cadetblue4")+
+  theme_few()+
+  labs(title = "Oligotrophic")
+
+m <- ggplot(meso, aes(x = log_CHLA, y = amfcAll))+
+  geom_point(col = "cadetblue4")+
+  theme_few()+
+  labs(title = "Mesotrophic")
+
+e <- ggplot(eu, aes(x = log_CHLA, y = amfcAll))+
+  geom_point(col = "cadetblue4")+
+  theme_few()+
+  labs(title = "Eutrophic")
+
+h <- ggplot(heu, aes(x = log_CHLA, y = amfcAll))+
+  geom_point(col = "cadetblue4")+
+  theme_few()+
+  labs(title = "Hypereutrophic")
+
+grid.arrange(o, m, e, h, ncol = 2)
 ```
 
-	A BIT OF INFO ABOUT WHY LM and WHICH?
+  This final figure shows the distribution of primary productivity split out by trophic status. This indicates that there are some trends more localized to the trophic status of each lake but the statistical analysis still indicates that the correlations are very weak and do not indicate statistically significant findings.
 
 
-PTL
+  
    
-NTL
-   
-CHLA
-   
-
-	As seen above, there is a slight increase in correlation for each of the three variables when increasing the time difference between the x and y variables. This finding indicates that there is a temporal relationship between Fractional Littoral Macrophyte Coverage and nutrient loading and Chlorophyll A as a proxy for pelagic productivity. It appears that amfcAll displays a delayed response to the nutrient loading in the lakes indicating that macrophyte cover could be a good long-term indicator of Trophic Status in lakes. 
-	LM TABLES AND EXPLANATION
-	STATISTICAL SIGNIFICANCE?
